@@ -75,4 +75,22 @@ abstract class Model extends Conection implements ModelInterface
         $result = mysqli_query($this->db, $query);
         return $result;
     }
+
+    public function search_data($keyword, $table)
+    {
+
+        $query = "SELECT * FROM $table $keyword";
+        $result = mysqli_query($this->db, $query);
+
+        return $this->convert_data($result);
+    }
+
+    public function paginate_data($limit, $start, $table)
+    {
+
+        $query = "SELECT * FROM $table LIMIT $limit, $start";
+        $result = mysqli_query($this->db, $query);
+
+        return $this->convert_data($result);
+    }
 }

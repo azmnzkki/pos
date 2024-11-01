@@ -6,6 +6,10 @@ require_once __DIR__ . "/../Model/Category.php";
 
 $categories = new Category();
 // var_dump($categories->all());
+
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$limit = 3;
+$start = ($page - 1) * $limit;
 ?>
 
 
@@ -93,7 +97,7 @@ $categories = new Category();
                                                 </tr>
 
 
-                                                <?php foreach ($categories->all() as $category) : ?>
+                                                <?php foreach ($categories->paginate($start, $limit) as $category) : ?>
                                                     <tr>
                                                         <td class="">
                                                             <div class="custom-checkbox custom-control">
@@ -113,10 +117,42 @@ $categories = new Category();
                                                 <?php endforeach; ?>
 
 
+
+
                                             </table>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6 mx-auto">
+
+                                <div class="card-body">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination">
+
+                                            <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
+                                                <a class="page-link" href="?page=<?= $page - 1 ?>">Previous</a>
+                                            </li>
+
+                                            <?php
+                                            $totalData = count($categories->all());
+                                            $totalPages = ceil($totalData / $limit);
+
+                                            for ($i = 1; $i <= $totalPages; $i++) : ?>
+                                                <li class="page-item <?= $page == $i ? 'active' : '' ?>">
+                                                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                                </li>
+                                            <?php endfor; ?>
+
+                                            <li class="page-item <?= $page >= $totalPages ? 'disabled' : '' ?>">
+                                                <a class="page-link" href="?page=<?= $page + 1 ?>">Next</a>
+                                            </li>
+
+                                        </ul>
+                                    </nav>
+                                </div>
+
+
                             </div>
                         </div>
                     </div>

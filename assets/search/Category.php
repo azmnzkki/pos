@@ -8,7 +8,8 @@ $key = $_GET["keyword"];
 $category = new Category();
 $kategories = $category->search($key);
 
-var_dump($kategories);
+
+// var_dump($kategories);
 
 
 ?>

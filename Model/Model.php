@@ -13,7 +13,7 @@ abstract class Model extends Conection implements ModelInterface
         $key = implode(",", $key);
         $value = implode("','", $value);
         $query = "INSERT INTO $table ($key) VALUES ('$value')";
-        echo $query;
+        // echo $query;
         $result = mysqli_query($this->db, $query);
         if ($result) {
             return $datas;
@@ -85,10 +85,10 @@ abstract class Model extends Conection implements ModelInterface
         return $this->convert_data($result);
     }
 
-    public function paginate_data($limit, $start, $table)
+    public function paginate_data($start, $limit, $table)
     {
 
-        $query = "SELECT * FROM $table LIMIT $limit, $start";
+        $query = "SELECT * FROM $table LIMIT $start, $limit";
         $result = mysqli_query($this->db, $query);
 
         return $this->convert_data($result);

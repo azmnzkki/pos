@@ -15,9 +15,11 @@ class Category extends Model
     public function create($datas)
     {
 
-        return parent::create_data($datas, $this->table);
+        return
+         parent::create_data($datas, $this->table);
     }
 
+   
     public function all()
     {
         return parent::all_data($this->table);

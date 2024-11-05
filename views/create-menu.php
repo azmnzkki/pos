@@ -1,3 +1,39 @@
+<?php
+
+require_once __DIR__ . "/../Model/Model.php";
+require_once __DIR__ . "/../Model/Category.php";
+require_once __DIR__ . "/../Model/Item.php";
+
+
+$categories = new Category();
+$categories = $categories->all();
+
+
+// var_dump($categories);
+$menu = new Item();
+if (isset($_POST["submit"])) {
+    // var_dump($_POST);
+    $datas = [
+        "post" => $_POST,
+        "files" => $_FILES,
+    ];
+    $result = $menu->create($datas);
+    if (gettype($result) == "string") {
+        echo "<script>alert('('{$result}')');
+         window.location.href = 'create-menu.php';
+         </script>";
+    } else {
+        echo "<script>alert('menu Berhasil di tambahkan');
+         window.location.href = 'create-menu.php';</script>";
+    }
+}
+
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,41 +98,39 @@
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="card">
-                                    <div class="card-body">
+                                    <form action="" method="POST" enctype="multipart/form-data" class="card-body">
                                         <div class="form-group">
-                                            <label>Nama Menu</label>
-                                            <input type="text" class="form-control inputtags">
+                                            <label for="name">Nama Menu</label>
+                                            <input name="name" id="name" type="text" class="form-control inputtags">
                                         </div>
 
                                         <div class="form-group d-flex flex-column">
-                                            <label>Gambar</label>
+                                            <label for="attachment">Gambar</label>
                                             <div class="custom-file">
-                                                <input type="file" name="site_favicon" class="custom-file-input" id="site-favicon">
+                                                <input type="file" name="attachment" class="custom-file-input" id="attachment">
                                                 <label class="custom-file-label">Choose File</label>
                                             </div>
                                         </div>
 
                                         <div class="form-group">
-                                            <label>Pilih Kategori</label>
-                                            <select class="form-control selectric">
-                                                <option>Option 1</option>
-                                                <option>Option 2</option>
-                                                <option>Option 3</option>
-                                                <option>Option 4</option>
-                                                <option>Option 5</option>
-                                                <option>Option 6</option>
+                                            <label for="category_id">Pilih Kategori</label>
+                                            <select name="category_id" id="category_id" class="form-control selectric">
+                                                <?php foreach ($categories as $category) : ?>
+                                                    <option value="<?= $category["id"] ?>"><?= $category["name"] ?></option>
+                                                <?php endforeach; ?>
+
                                             </select>
                                         </div>
 
 
                                         <div class="form-group">
-                                            <label>Harga</label>
-                                            <input type="number" class="form-control inputtags">
+                                            <label for="price">Harga</label>
+                                            <input name="price" id="price" type="number" class="form-control inputtags">
                                         </div>
                                         <div class="d-flex justify-content-end">
-                                            <button class="btn btn-primary">Tambahkan</button>
+                                            <button type="submit" name="submit" class="btn btn-primary">Tambahkan</button>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
 
                             </div>

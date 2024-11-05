@@ -7,5 +7,4 @@ interface ModelInterface
     public function find($id);
     public function update($id, $datas);
     public function delete($id);
-
 }
